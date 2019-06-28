@@ -2,7 +2,7 @@ package me.robo.application;
 
 
 import me.robo.MyRobo;
-import me.robo.action.RobotAction;
+import me.robo.action.RoboAction;
 import me.robo.action.impl.*;
 import me.robo.movement.Facing;
 import me.robo.simulator.impl.TableSimulatorSurface;
@@ -19,7 +19,7 @@ public class MyRoboRunner {
 
     public static void main(String[] args) {
         try {
-            List<RobotAction> actions = getCommandsFromInput();
+            List<RoboAction> actions = getCommandsFromInput();
             MyRobo robotBobSimulator = getMyRobo();
             actions.stream().forEachOrdered(c -> robotBobSimulator.performAction(c));
         } catch (RuntimeException e) {
@@ -27,8 +27,8 @@ public class MyRoboRunner {
         }
     }
 
-    private static List<RobotAction> getCommandsFromInput() {
-        List<RobotAction> actions = new ArrayList<>();
+    private static List<RoboAction> getCommandsFromInput() {
+        List<RoboAction> actions = new ArrayList<>();
         Scanner scanIn = new Scanner(System.in);
         boolean exit = false;
         while (!exit) {
@@ -44,7 +44,7 @@ public class MyRoboRunner {
         return actions;
     }
 
-    private static Optional<RobotAction> getAction(String actionString) {
+    private static Optional<RoboAction> getAction(String actionString) {
         if (actionString == null || actionString.length() == 0) return Optional.empty();
         if (Actions.isPlaceAction(actionString)) {
             return getPlaceAction(actionString);
@@ -61,7 +61,7 @@ public class MyRoboRunner {
 
     }
 
-    private static Optional<RobotAction> getPlaceAction(String actionString) {
+    private static Optional<RoboAction> getPlaceAction(String actionString) {
         String arr[] = actionString.split(" ")[1].split(",");
         if (arr.length == 3) {
             return Optional.of(

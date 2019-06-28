@@ -1,6 +1,6 @@
 package me.robo;
 
-import me.robo.action.RobotAction;
+import me.robo.action.RoboAction;
 import me.robo.movement.Position;
 import me.robo.simulator.SimulatorSurface;
 
@@ -15,7 +15,7 @@ public class MyRobo
         this.simulatorSurface = simulatorSurface;
     }
 
-    public void performAction(RobotAction action) {
+    public void performAction(RoboAction action) {
         currentPosition = action.execute(this).orElse(null);
     }
 

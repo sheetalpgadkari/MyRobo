@@ -7,6 +7,7 @@ import me.robo.movement.Position;
 import java.util.Optional;
 
 public class LeftAction extends Action {
+
     @Override
     protected boolean validate(MyRobo myRobo) {
         return isOnSurface(myRobo);

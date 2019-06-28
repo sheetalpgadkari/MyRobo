@@ -1,14 +1,14 @@
 package me.robo.action.impl;
 
 import me.robo.MyRobo;
-import me.robo.action.RobotAction;
+import me.robo.action.RoboAction;
 import me.robo.movement.Position;
 import me.robo.simulator.SimulatorSurface;
 
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public abstract class Action implements RobotAction {
+public abstract class Action implements RoboAction {
 
     @Override
     public Optional<Position> execute(MyRobo myRobo) {

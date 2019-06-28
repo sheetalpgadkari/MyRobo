@@ -1,6 +1,7 @@
-package me.robo.simulator;
+package me.robo.simulator.impl;
 
 import me.robo.movement.Position;
+import me.robo.simulator.SimulatorSurface;
 
 public class TableSimulatorSurface implements SimulatorSurface
 {

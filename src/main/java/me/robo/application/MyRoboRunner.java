@@ -49,13 +49,13 @@ public class MyRoboRunner {
         if (Actions.isPlaceAction(actionString)) {
             return getPlaceAction(actionString);
         } else if (Actions.isMoveAction(actionString)) {
-            return Optional.ofNullable(new MoveAction());
+            return Optional.of(new MoveAction());
         } else if (Actions.isLeftAction(actionString)) {
-            return Optional.ofNullable(new LeftAction());
+            return Optional.of(new LeftAction());
         } else if (Actions.isRightAction(actionString)) {
-            return Optional.ofNullable(new RightAction());
+            return Optional.of(new RightAction());
         } else if (Actions.isReportAction(actionString)) {
-            return Optional.ofNullable(new ReportAction());
+            return Optional.of(new ReportAction());
         }
         return Optional.empty();
 
@@ -64,7 +64,7 @@ public class MyRoboRunner {
     private static Optional<RobotAction> getPlaceAction(String actionString) {
         String arr[] = actionString.split(" ")[1].split(",");
         if (arr.length == 3) {
-            return Optional.ofNullable(
+            return Optional.of(
                     new PlaceAction(
                             Integer.parseInt(arr[0]),
                             Integer.parseInt(arr[1]), Facing.valueOf(arr[2])

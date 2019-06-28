@@ -18,9 +18,13 @@ public class MyRoboRunner {
     public static final int yMax = 5;
 
     public static void main(String[] args) {
-        List<RobotAction> actions = getCommandsFromInput();
-        MyRobo robotBobSimulator = getMyRobo();
-        actions.stream().forEachOrdered(c -> robotBobSimulator.performAction(c));
+        try {
+            List<RobotAction> actions = getCommandsFromInput();
+            MyRobo robotBobSimulator = getMyRobo();
+            actions.stream().forEachOrdered(c -> robotBobSimulator.performAction(c));
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static List<RobotAction> getCommandsFromInput() {
@@ -29,40 +33,44 @@ public class MyRoboRunner {
         boolean exit = false;
         while (!exit) {
             String inputString = scanIn.nextLine();
-            if (getCommand(inputString).isPresent()) {
-                actions.add(getCommand(inputString).get());
+            if (getAction(inputString).isPresent()) {
+                actions.add(getAction(inputString).get());
             } else {
-                throw new RuntimeException("Invalid Input" + inputString);
+                throw new RuntimeException("Invalid Input " + inputString);
             }
-           if (inputString.equals("REPORT")) exit = true;
+            if (Actions.isReportAction(inputString)) exit = true;
         }
         scanIn.close();
         return actions;
     }
 
-    private static Optional<RobotAction> getCommand(String inputString) {
-        if (inputString == null || inputString.length() == 0) return Optional.empty();
-
-        if (inputString.indexOf("PLACE") >= 0) {
-            String arr[] = inputString.split(" ")[1].split(",");
-            if (arr.length == 3) {
-                return Optional.ofNullable(
-                        new PlaceAction(
-                                Integer.parseInt(arr[0]),
-                                Integer.parseInt(arr[1]), Facing.valueOf(arr[2])
-                        ));
-            }
-        } else if (inputString.indexOf("MOVE") >= 0) {
+    private static Optional<RobotAction> getAction(String actionString) {
+        if (actionString == null || actionString.length() == 0) return Optional.empty();
+        if (Actions.isPlaceAction(actionString)) {
+            return getPlaceAction(actionString);
+        } else if (Actions.isMoveAction(actionString)) {
             return Optional.ofNullable(new MoveAction());
-        } else if (inputString.indexOf("LEFT") >= 0) {
+        } else if (Actions.isLeftAction(actionString)) {
             return Optional.ofNullable(new LeftAction());
-        } else if (inputString.indexOf("RIGHT") >= 0) {
+        } else if (Actions.isRightAction(actionString)) {
             return Optional.ofNullable(new RightAction());
-        } else if (inputString.indexOf("REPORT") >= 0) {
+        } else if (Actions.isReportAction(actionString)) {
             return Optional.ofNullable(new ReportAction());
         }
         return Optional.empty();
 
+    }
+
+    private static Optional<RobotAction> getPlaceAction(String actionString) {
+        String arr[] = actionString.split(" ")[1].split(",");
+        if (arr.length == 3) {
+            return Optional.ofNullable(
+                    new PlaceAction(
+                            Integer.parseInt(arr[0]),
+                            Integer.parseInt(arr[1]), Facing.valueOf(arr[2])
+                    ));
+        }
+        return Optional.empty();
     }
 
     private static MyRobo getMyRobo() {
